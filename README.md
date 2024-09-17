@@ -17,4 +17,7 @@ pip install constallation_mmr
 poetry add constallation_mmr
 ```
 
-##
+## ChangeLogs
+- #### 1.0.0
+  - added Rig class
+  - added method fetch_rigs
