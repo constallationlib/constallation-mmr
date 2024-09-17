@@ -5,3 +5,15 @@
 ![PyPI - Daily](https://img.shields.io/pypi/dd/constallation_mmr)
 
 ## Constallation-MMR
+Constallation-MMR is a OOP oriented API wrapper part of the greater constallation networking library.
+
+### Installation
+#### Installing With Package Managers
+##### Installing With Pip
+```shell
+pip install constallation_mmr
+```
+##### Installing With Poetry
+```shell
+poetry add constallation_mmr
+```
