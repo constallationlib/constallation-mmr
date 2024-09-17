@@ -169,3 +169,12 @@ def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5) -> list[Rig]:
         rigs.append(_rig)
 
     return rigs
+
+def fetch_rig(rig_id:int, rigs_refresh_rate:int=5) -> Rig:
+    """
+    Fetches a single rig and returns it as a constallation_mmr.Rig object.
+    :param rig_id: The ID of the rig to query.
+    :param rigs_refresh_rate: The interval of which the rigs autorefresh
+    :return: constallation_mmr.Rig
+    """
+    return Rig(rig_id, rigs_refresh_rate)
