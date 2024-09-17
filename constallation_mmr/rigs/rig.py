@@ -156,7 +156,7 @@ class Rig:
 
 
 
-def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5):
+def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5) -> list[Rig]:
     """
     Fetches multiple rigs and returns them as constallation_mmr.Rig objects.
     :param rig_ids: A list of rigs to query.
@@ -169,6 +169,7 @@ def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5):
         rigs.append(_rig)
 
     return rigs
+
 
 
 if __name__ == "__main__":
