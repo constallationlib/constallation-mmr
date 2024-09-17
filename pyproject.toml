@@ -1,14 +1,13 @@
 [tool.poetry]
 name = "constallation-mmr"
-version = "1.0.0"
-description = ""
+version = "1.0.0b"
+description = "An OOP-heavy wrapper for the Mining Rig Rentals API"
 authors = ["CoulterStutz <coultercash@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-requests = "^2.32.3"
-
+python = ">=3.8"
+requests = ">=2.32.3"
 
 [build-system]
 requires = ["poetry-core"]
