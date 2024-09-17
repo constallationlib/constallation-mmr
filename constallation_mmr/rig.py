@@ -1,18 +1,28 @@
+from typing import Optional, List
 import requests
 import threading
 import time
 
+class MRRAuthenticationError(Exception):
+    """Custom exception for authentication errors in Mining Rig Rentals API."""
+    def __init__(self, message="API key and secret key are required for this operation"):
+        self.message = message
+        super().__init__(self.message)
+
 
 class Rig:
-    def __init__(self, rig_id: int, rig_refresh_rate: int = 5):
+    def __init__(self, rig_id: int, rig_refresh_rate: int = 5, mmr_api_key: str = None, mmr_api_secret: str = None):
         """
         The Rig class provides an OOP-based interface for fetching rig information from the API.
         :param rig_id: The ID of the rig to query
         :param rig_refresh_rate: controls the interval of data requerying
+        :param mmr_api_key: API key for authenticated requests
+        :param mmr_api_secret: API secret for authenticated requests
         """
-
         self.rig_id = rig_id
         self._rig_refresh_rate = rig_refresh_rate
+        self._mmr_api_key = mmr_api_key
+        self._mmr_api_secret = mmr_api_secret
         self._data = {}
         self._stop_thread = False
         self._fetch_rig_data()
@@ -49,6 +59,29 @@ class Rig:
         Destructor method that stops the thread when the object is destroyed.
         """
         self.stop_refresh()
+
+    def delete_rig(self):
+        """
+        Deletes the rig from the MiningRigRentals service.
+        This method requires valid API key and secret.
+        """
+        if not self._mmr_api_key or not self._mmr_api_secret:
+            raise MRRAuthenticationError()
+
+        url = f"https://www.miningrigrentals.com/api/v2/rig/{self.rig_id}/delete"
+        headers = {
+            'x-api-key': self._mmr_api_key,
+            'x-api-secret': self._mmr_api_secret
+        }
+
+        try:
+            response = requests.delete(url, headers=headers)
+            if response.status_code == 200 and response.json().get("success"):
+                print(f"Rig {self.rig_id} successfully deleted.")
+            else:
+                raise Exception(f"Failed to delete rig: {response.text}")
+        except Exception as e:
+            print(f"Error while deleting rig: {e}")
 
     @property
     def id(self):
@@ -156,25 +189,39 @@ class Rig:
 
 
 
-def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5) -> list[Rig]:
+def fetch_rigs(
+    rig_ids: List[int],
+    rigs_refresh_rate: int = 5,
+    mmr_api_key: Optional[str] = None,
+    mmr_api_secret: Optional[str] = None
+) -> List[Rig]:
     """
     Fetches multiple rigs and returns them as constallation_mmr.Rig objects.
     :param rig_ids: A list of rigs to query.
-    :param rigs_refresh_rate: The interval of which the rigs autorefresh
-    :return: list of Rigs
+    :param rigs_refresh_rate: The interval at which the rigs autorefresh.
+    :param mmr_api_key: Optional API key for authenticated requests.
+    :param mmr_api_secret: Optional API secret for authenticated requests.
+    :return: list of Rig objects.
     """
     rigs = []
-    for _ in rig_ids:
-        _rig = Rig(_, rigs_refresh_rate)
+    for rig_id in rig_ids:
+        _rig = Rig(rig_id, rigs_refresh_rate, mmr_api_key, mmr_api_secret)
         rigs.append(_rig)
 
     return rigs
 
-def fetch_rig(rig_id:int, rigs_refresh_rate:int=5) -> Rig:
+def fetch_rig(
+    rig_id: int,
+    rigs_refresh_rate: int = 5,
+    mmr_api_key: Optional[str] = None,
+    mmr_api_secret: Optional[str] = None
+) -> Rig:
     """
     Fetches a single rig and returns it as a constallation_mmr.Rig object.
     :param rig_id: The ID of the rig to query.
-    :param rigs_refresh_rate: The interval of which the rigs autorefresh
-    :return: constallation_mmr.Rig
+    :param rigs_refresh_rate: The interval at which the rigs autorefresh.
+    :param mmr_api_key: Optional API key for authenticated requests.
+    :param mmr_api_secret: Optional API secret for authenticated requests.
+    :return: constallation_mmr.Rig object.
     """
-    return Rig(rig_id, rigs_refresh_rate)
+    return Rig(rig_id, rigs_refresh_rate, mmr_api_key, mmr_api_secret)
