@@ -24,3 +24,5 @@ poetry add constallation_mmr
 - #### 1.0.1
   - added method `fetch_rig`
 - #### 1.0.2
+  - Added method inside class `Rig` for deleting the rig
+  - Updated `Rig` class to support credential passthrough
