@@ -169,9 +169,3 @@ def fetch_rigs(rig_ids:list[int], rigs_refresh_rate:int=5) -> list[Rig]:
         rigs.append(_rig)
 
     return rigs
-
-
-
-if __name__ == "__main__":
-    rig = Rig(rig_id=328771)
-    print(rig.name)
