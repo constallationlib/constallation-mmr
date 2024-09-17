@@ -20,4 +20,7 @@ poetry add constallation_mmr
 ## ChangeLogs
 - #### 1.0.0
   - added Rig class
-  - added method fetch_rigs
+  - added method `fetch_rigs`
+- #### 1.0.1
+  - added method `fetch_rig`
+- #### 1.0.2
