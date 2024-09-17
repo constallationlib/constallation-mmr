@@ -5,3 +5,4 @@
 ![PyPI - Weekly](https://img.shields.io/pypi/dw/constallation_mmr)
 ![PyPI - Daily](https://img.shields.io/pypi/dd/constallation_mmr)
 ---
+An OOP-heavy wrapper for the Mining Rig Rentals API
