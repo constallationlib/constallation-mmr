@@ -8,7 +8,6 @@
 Constallation-MMR is a OOP oriented API wrapper part of the greater constallation networking library.
 
 ### Installation
-#### Installing With Package Managers
 ##### Installing With Pip
 ```shell
 pip install constallation_mmr
