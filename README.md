@@ -28,3 +28,5 @@ poetry add constallation_mmr
   - Updated `Rig` class to support credential passthrough
 - #### 1.0.3
   - Rewrote `Rig` class properties to handle more verbose output
+- #### 1.0.4
+  - Allowed `Rig` class ids to also be strings. 
