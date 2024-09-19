@@ -1,7 +1,7 @@
 import requests
 import threading
 import time
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Union
 
 class MRRAuthenticationError(Exception):
     """Custom exception for authentication errors in Mining Rig Rentals API."""
@@ -11,15 +11,15 @@ class MRRAuthenticationError(Exception):
 
 
 class Rig:
-    def __init__(self, rig_id: int, rig_refresh_rate: int = 5, mmr_api_key: str = None, mmr_api_secret: str = None):
+    def __init__(self, rig_id: Union[int, str], rig_refresh_rate: int = 5, mmr_api_key: str = None, mmr_api_secret: str = None):
         """
         The Rig class provides an OOP-based interface for fetching rig information from the API.
-        :param rig_id: The ID of the rig to query
+        :param rig_id: The ID of the rig to query, can be an integer or a string that will be converted to an integer
         :param rig_refresh_rate: controls the interval of data requerying
         :param mmr_api_key: API key for authenticated requests
         :param mmr_api_secret: API secret for authenticated requests
         """
-        self.rig_id = rig_id
+        self.rig_id = int(rig_id)  # Convert rig_id to int if it's a string
         self._rig_refresh_rate = rig_refresh_rate
         self._mmr_api_key = mmr_api_key
         self._mmr_api_secret = mmr_api_secret
@@ -193,14 +193,14 @@ class Rig:
 
 
 def fetch_rigs(
-    rig_ids: List[int],
+    rig_ids: List[Union[int, str]],
     rigs_refresh_rate: int = 5,
     mmr_api_key: Optional[str] = None,
     mmr_api_secret: Optional[str] = None
 ) -> List[Rig]:
     """
     Fetches multiple rigs and returns them as constallation_mmr.Rig objects.
-    :param rig_ids: A list of rigs to query.
+    :param rig_ids: A list of rigs to query. Can contain integers or strings that will be converted to integers.
     :param rigs_refresh_rate: The interval at which the rigs autorefresh.
     :param mmr_api_key: Optional API key for authenticated requests.
     :param mmr_api_secret: Optional API secret for authenticated requests.
@@ -214,14 +214,14 @@ def fetch_rigs(
     return rigs
 
 def fetch_rig(
-    rig_id: int,
+    rig_id: Union[int, str],
     rigs_refresh_rate: int = 5,
     mmr_api_key: Optional[str] = None,
     mmr_api_secret: Optional[str] = None
 ) -> Rig:
     """
     Fetches a single rig and returns it as a constallation_mmr.Rig object.
-    :param rig_id: The ID of the rig to query.
+    :param rig_id: The ID of the rig to query, can be an integer or a string that will be converted to an integer.
     :param rigs_refresh_rate: The interval at which the rigs autorefresh.
     :param mmr_api_key: Optional API key for authenticated requests.
     :param mmr_api_secret: Optional API secret for authenticated requests.
