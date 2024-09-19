@@ -1,4 +1,4 @@
-name: Build Package (Python 3.12)
+name: Build Package
 
 on:
   pull_request:
