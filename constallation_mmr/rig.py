@@ -1,7 +1,7 @@
-from typing import Optional, List
 import requests
 import threading
 import time
+from typing import Optional, List, Dict, Any
 
 class MRRAuthenticationError(Exception):
     """Custom exception for authentication errors in Mining Rig Rentals API."""
@@ -23,7 +23,7 @@ class Rig:
         self._rig_refresh_rate = rig_refresh_rate
         self._mmr_api_key = mmr_api_key
         self._mmr_api_secret = mmr_api_secret
-        self._data = {}
+        self._data: Dict[str, Any] = {}
         self._stop_thread = False
         self._fetch_rig_data()
         self._start_refresh_thread()
@@ -55,9 +55,7 @@ class Rig:
             self._thread.join()
 
     def __del__(self):
-        """
-        Destructor method that stops the thread when the object is destroyed.
-        """
+        """Destructor method that stops the thread when the object is destroyed."""
         self.stop_refresh()
 
     def delete_rig(self):
@@ -101,7 +99,8 @@ class Rig:
 
     @property
     def status(self):
-        return self._data.get("status")
+        """Returns the nested 'status' dictionary."""
+        return self._data.get("status", {})
 
     @property
     def online(self):
@@ -129,7 +128,8 @@ class Rig:
 
     @property
     def optimal_diff(self):
-        return self._data.get("optimal_diff")
+        """Returns the nested 'optimal_diff' dictionary."""
+        return self._data.get("optimal_diff", {})
 
     @property
     def ndevices(self):
@@ -145,7 +145,8 @@ class Rig:
 
     @property
     def price(self):
-        return self._data.get("price")
+        """Returns the nested 'price' dictionary."""
+        return self._data.get("price", {})
 
     @property
     def minhours(self):
@@ -157,7 +158,8 @@ class Rig:
 
     @property
     def hashrate(self):
-        return self._data.get("hashrate")
+        """Returns the nested 'hashrate' dictionary."""
+        return self._data.get("hashrate", {})
 
     @property
     def error_notice(self):
@@ -181,12 +183,13 @@ class Rig:
 
     @property
     def hours(self):
-        return self._data.get("hours")
+        """Returns the 'hours' value from the nested 'status' dictionary."""
+        return self._data.get("status", {}).get("hours")
 
     @property
     def rented(self):
-        return self._data.get("rented")
-
+        """Returns the 'rented' value from the nested 'status' dictionary."""
+        return self._data.get("status", {}).get("rented")
 
 
 def fetch_rigs(
