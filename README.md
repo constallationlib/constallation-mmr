@@ -1,4 +1,4 @@
-[![PyPi](https://img.shields.io/badge/PyPi-1.0.2-yellow?labelColor=blue&style=flat&logo=pypi&logoColor=yellow&link=https://pypi.org/project/constallation_mmr)](https://pypi.org/project/constallation_mmr)
+[![PyPi](https://img.shields.io/badge/PyPi-1.0.3-yellow?labelColor=blue&style=flat&logo=pypi&logoColor=yellow&link=https://pypi.org/project/constallation_mmr)](https://pypi.org/project/constallation_mmr)
 ![Python](https://img.shields.io/badge/Python-3.8-blue?labelColor=yellow&style=flat&logo=python)
 ![PyPI - Monthly](https://img.shields.io/pypi/dm/constallation_mmr)
 ![PyPI - Weekly](https://img.shields.io/pypi/dw/constallation_mmr)
@@ -26,3 +26,5 @@ poetry add constallation_mmr
 - #### 1.0.2
   - Added method inside class `Rig` for deleting the rig
   - Updated `Rig` class to support credential passthrough
+- #### 1.0.3
+  - Rewrote `Rig` class properties to handle more verbose output
